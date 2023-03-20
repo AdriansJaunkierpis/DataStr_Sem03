@@ -86,7 +86,7 @@ public class MyHeap<T> {
 		T element = elements[0];
 		elements[0] = elements[elementCounter-1];
 		elementCounter--;
-		//TODO call reheapDown()
+		reheapDown(0);
 		return element;
 	}
 	
@@ -129,10 +129,51 @@ public class MyHeap<T> {
 				largestChild = rightChild;
 			}
 			//2.2 compare element with the largest child and, if necessary - swap
-			if (((Comparable)(elements[indexOfElement])).compareTo(elements[largestChild])> 0) {
+			if (((Comparable)(elements[indexOfElement])).compareTo(elements[largestChild]) > 0) {
 				swap(indexOfElement, largestChild);
+				reheapDown(largestChild);
 			}
 		}
 	}
-	//TODO makeEmpty
+	public void makeEmpty() {
+		arraySize = DEFAULT_ARRAY_SIZE;
+		elementCounter = 0;
+		elements = (T[]) new Object[arraySize];
+		System.gc();
+	}
+	public void print() {
+		for (int i = 0; i < elementCounter; i++) {
+			System.out.println(elements[i] + " ");
+		}
+		System.out.println(" ");
+	}
+	public void prefixPrint() throws Exception {
+		if (isEmpty() ) {
+			throw (new Exception("Heap empty"));
+		} else {
+			prefixPrintHelper(0);
+		}
+	}
+	private void prefixPrintHelper(int indexOfElement) {
+		int leftChild = indexOfElement * 2 + 1;
+		int rightChild = indexOfElement * 2 +2;
+		//Root
+		System.out.println("Parent: " + elements[indexOfElement]);
+		//Left
+		if (leftChild < elementCounter) {
+			System.out.println("LeftChild: " + elements[leftChild]);
+			prefixPrintHelper(leftChild);
+		}
+		//Right
+		if (rightChild < elementCounter) {
+			System.out.println("RightChild: " + elements[rightChild]);
+			prefixPrintHelper(rightChild);
+		}
+	}
+	public void postfixPrint() {
+			
+		}
+	public void inorderPrint() {
+		
+	}
 }
