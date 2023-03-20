@@ -74,7 +74,7 @@ public class MyHeap<T> {
 		elements[elementCounter] = newElement;
 		//3. increase element counter
 		elementCounter++;
-		//TODO call reheapUp() function
+		reheapUp(elementCounter - 1);
 	}
 	
 	public T remove() throws Exception {
@@ -88,10 +88,51 @@ public class MyHeap<T> {
 		elementCounter--;
 		//TODO call reheapDown()
 		return element;
-		
 	}
 	
+	private void swap(int ind1, int ind2) {
+		T temp = elements[ind1];
+		elements[ind2] = elements[ind1];
+		elements[ind2] = temp;
+	}
 	
+	public void reheapUp(int index) {
+		// rightChildIndex = parentIndex * 2 + 2
+		// leftChildIndex = parentIndex * 2 + 1
+		int indexOfParent = (int)((index - 1) / 2);
+		
+		if (indexOfParent >= 0) {
+			if (((Comparable)(elements[index])).compareTo(elements[indexOfParent]) > 0) {
+				swap(index, indexOfParent);
+				reheapUp(indexOfParent);
+			}
+		}
+	}
 	
-	
+	public void reheapDown(int indexOfElement) {
+		//0. find both children indexes
+		int leftChild = indexOfElement * 2 + 1;
+		int rightChild = indexOfElement * 2 +2;
+		//1. only left child
+		//1.1 compare elem with left child, if necessary - swap
+		if (leftChild < elementCounter && rightChild >= elementCounter) {
+			if (((Comparable)(elements[indexOfElement])).compareTo(elements[leftChild]) > 0) {
+				swap(indexOfElement, leftChild);
+				
+			}
+		}
+		//2. two children
+		else if (leftChild < elementCounter && rightChild < elementCounter) {
+			//2.1 find out the largest child
+			int largestChild = leftChild;
+			if (((Comparable)(elements[leftChild])).compareTo(elements[rightChild]) > 0) {
+				largestChild = rightChild;
+			}
+			//2.2 compare element with the largest child and, if necessary - swap
+			if (((Comparable)(elements[indexOfElement])).compareTo(elements[largestChild])> 0) {
+				swap(indexOfElement, largestChild);
+			}
+		}
+	}
+	//TODO makeEmpty
 }
