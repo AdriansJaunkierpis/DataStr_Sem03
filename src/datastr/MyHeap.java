@@ -158,15 +158,15 @@ public class MyHeap<T> {
 		int leftChild = indexOfElement * 2 + 1;
 		int rightChild = indexOfElement * 2 +2;
 		//Root
-		System.out.println("Parent: " + elements[indexOfElement]);
+		System.out.println("; Parent: " + elements[indexOfElement]);
 		//Left
 		if (leftChild < elementCounter) {
-			System.out.println("LeftChild: " + elements[leftChild]);
+			System.out.println("; LeftChild: " + elements[leftChild]);
 			prefixPrintHelper(leftChild);
 		}
 		//Right
 		if (rightChild < elementCounter) {
-			System.out.println("RightChild: " + elements[rightChild]);
+			System.out.println("; RightChild: " + elements[rightChild]);
 			prefixPrintHelper(rightChild);
 		}
 	}
